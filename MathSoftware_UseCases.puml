@@ -1,0 +1,15 @@
+@startuml
+actor Пользователь as user
+(Определить функцию) as def_func
+(Определить константу) as def_const
+(Построить график функции) as plot_func_graph
+user -up- def_func
+user -left- def_const
+user -right- plot_func_graph
+def_func ..> (Задать тело\nфункции) : inculde
+def_func ..> (Задать значения\nпараметров) : inculde
+def_func ..> (Задать ограничения на\nзначение аргумента) : inculde
+plot_func_graph <.. (Задать цвет\nграфика) : extend
+def_const ..> (Задать имя\nконстанты) : inculde
+def_const ..> (Задать тело\nконстанты) : inculde
+@enduml
