@@ -1,0 +1,31 @@
+@startuml
+Actor User as user
+participant "Сервис оформления заказа" as ordering_service
+participant "Сервис корзины" as cart_service
+participant "Сервис оплаты заказа" as order_payment_service
+database    "База данных"    as db
+participant "Платёжный шлюз" as payment_gateway
+participant "Сервис уведомлений" as notification_service
+user -> ordering_service : Просмотр товара
+ordering_service -> cart_service: Добавление товара в корзину
+cart_service -> db: Зафиксировать товар за пользователем
+cart_service -> order_payment_service: Начать оплату
+order_payment_service -> db: Проверить наличие товара на складе
+alt "Товар в корзине"
+   db --> order_payment_service: Ответ о наличии товара
+   order_payment_service -> payment_gateway: Оплата товара
+   alt "оплата успешна"
+      payment_gateway --> order_payment_service: Подтверждение оплаты
+      order_payment_service -> ordering_service: Подтвердить оплату
+      ordering_service -> user: Вернуть сообщение об успешной оплате
+   else "оплата не прошла"
+      payment_gateway --> order_payment_service: Отмена оплаты
+      order_payment_service -> ordering_service: Отменить оплату
+      ordering_service -> user: Вернуть сообщение о неуспешной оплате
+   end
+else "Товар отсутсвует"
+   db --> order_payment_service: Ответ об отсутствии товара
+   order_payment_service -> ordering_service : Отклонить оплату
+   ordering_service -> user: Вернуть сообщение об отсутсвии товара
+end
+@enduml
