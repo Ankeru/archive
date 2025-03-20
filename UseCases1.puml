@@ -1,0 +1,36 @@
+@startuml
+left to right direction
+"User" as user
+rectangle "Сервис онлайн-покупок" {
+(Авторизация) as authorization
+(Просмотр\n товаров) as products_view
+(Взаимодействие\n с корзиной) as cart_Interacting
+(Оформление\n заказа) as Placing_an_order
+(Оплата при\n получении) as Payment_upon_receipt
+(Оплата\n онлайн) as Payment_online
+(Оплата\n заказа) as Order_payment
+(Увдомление пользователя) as User_notification
+(Отправка\n уведомления на склад) as Sending_notification_to_warehouse
+(Удаление товара\n из корзины) as del_products_from_cart
+(Добавление\n товара в корзину) as add_products_to_cart
+}
+user --> authorization
+user --> products_view
+user --> cart_Interacting
+user --> Placing_an_order
+user ---> Order_payment
+cart_Interacting <|.. add_products_to_cart : extends
+cart_Interacting <|.. del_products_from_cart : extends
+Order_payment ..> User_notification : include
+Order_payment ..> Sending_notification_to_warehouse : include
+Order_payment <|-- Payment_online
+Order_payment <|-- Payment_upon_receipt
+note bottom of user
+  Предусловия: 
+ Пользователь
+зарегистрирован и
+находится на
+странице
+авторизации
+end note
+@enduml
