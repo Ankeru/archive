@@ -1,4 +1,5 @@
 @startuml
+title "Use Cases для ПО построения графиков функций"
 actor Пользователь as user
 (Определить функцию) as def_func
 (Определить константу) as def_const
