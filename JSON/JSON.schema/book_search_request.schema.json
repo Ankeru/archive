@@ -1,0 +1,62 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "book_search_request",
+    "type": "object",
+    "properties": {
+      "pagination": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "description": "Смещение, с которого начинается выборка данных",
+            "type": "integer"
+          },
+          "limit": {
+            "description": "Количество записей в ответе",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "offset",
+          "limit"
+        ]
+      },
+      "name": {
+        "description": "Название книги или его часть",
+        "type": "string"
+      },
+      "author": {
+        "type": "string"
+      },
+      "genre": {
+        "type": "array",
+        "items": {
+          "enum": [
+            "novel",
+            "short story",
+            "poem",
+            "play",
+            "essay",
+            "narrative",
+            "ballad",
+            "fable",
+            "legend",
+            "myth",
+            "novella",
+            "epic",
+            "sonnet",
+            "ode",
+            "comedy",
+            "tragedy",
+            "satire",
+            "science fiction",
+            "fantasy",
+            "horror",
+            "dystopia"
+          ]
+        }
+      }
+    },
+    "required": [
+      "name"
+    ]
+}
