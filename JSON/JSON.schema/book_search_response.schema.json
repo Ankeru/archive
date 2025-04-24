@@ -5,6 +5,7 @@
     "properties": {
       "pagination": {
         "type": "object",
+        "description": "Offset-based pagination",
         "properties": {
           "offset": {
             "description": "Смещение, с которого начинается выборка данных",
