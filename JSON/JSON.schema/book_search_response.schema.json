@@ -1,0 +1,92 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "book_search_response",
+    "type": "object",
+    "properties": {
+      "pagination": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "description": "Смещение, с которого начинается выборка данных",
+            "type": "integer"
+          },
+          "limit": {
+            "description": "Количество записей в ответе",
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "offset",
+          "limit"
+        ],
+        "results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "author": {
+                "type": "string"
+              },
+              "author_id": {
+                "type": "string"
+              },
+              "language": {
+                "enum": [
+                  "English",
+                  "Spanish",
+                  "Mandarin Chinese",
+                  "Hindi",
+                  "Arabic",
+                  "Portuguese",
+                  "Bengali",
+                  "Russian",
+                  "Urdu",
+                  "Indonesian",
+                  "French",
+                  "Italian",
+                  "German",
+                  "Japanese",
+                  "Punjabi",
+                  "Turkish",
+                  "Marathi",
+                  "Telugu",
+                  "Tamil",
+                  "Vietnamese"
+                ]
+              },
+              "publication_date": {
+                "type": "string",
+                "format": "date"
+              },
+              "publisher": {
+                "type": "string"
+              },
+              "pages": {
+                "type": "integer"
+              },
+              "isbn": {
+                "type": "string"
+              },
+              "logo": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "author",
+              "author_id",
+              "language",
+              "publisher",
+              "isbn"
+            ]
+          }
+        }
+      }
+    }
+  }
