@@ -1,0 +1,121 @@
+openapi: 3.0.0
+info:
+  title: Book Search API
+  version: 1.0.0
+  description: API для поиска книг с поддержкой пагинации.
+tags:
+  - name: BookSearch
+paths:
+  /books/search:
+    get:
+      tags:
+        - BookSearch
+      summary: Поиск книг
+      description: Возвращает список книг с поддержкой пагинации.
+      parameters:
+        - name: offset
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Смещение, с которого начинается выборка данных.
+        - name: limit
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Количество записей в ответе.
+      responses:
+        '200':
+          description: Успешный ответ с результатами поиска книг.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/results'
+                    
+components:
+  schemas:
+    pagination:
+      type: object
+      properties:
+        offset:
+          type: integer
+          description: Смещение, с которого начинается выборка данных.
+          example: 0
+        limit:
+          type: integer
+          description: Количество записей в ответе.
+          example: 5
+        total:
+          type: integer
+          description: Общее количество записей.
+          example: 5
+      required: [offset, limit]
+    results:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Название книги.
+          example: "1984"
+        author:
+          type: string
+          description: Автор книги.
+          example: "Джордж Оруэлл"
+        author_id:
+          type: string
+          description: Идентификатор автора.
+          example: "9237"
+        language:
+          type: string
+          enum:
+            - English
+            - Spanish
+            - Mandarin Chinese
+            - Hindi
+            - Arabic
+            - Portuguese
+            - Bengali
+            - Russian
+            - Urdu
+            - Indonesian
+            - French
+            - Italian
+            - German
+            - Japanese
+            - Punjabi
+            - Turkish
+            - Marathi
+            - Telugu
+            - Tamil
+            - Vietnamese
+          description: Язык книги.
+          example: English
+        publication_date:
+          type: string
+          format: date
+          description: Дата публикации книги.
+          example: "08.06.1949"
+        publisher:
+          type: string
+          description: Издатель книги.
+          example: "Secker and Warbug"
+        pages:
+          type: integer
+          description: Количество страниц в книге.
+          example: 352
+        isbn:
+          type: string
+          description: ISBN книги.
+          example: "918-1-693-31532-6"
+        logo:
+          type: string
+          description: Логотип книги или издателя.
+      required: [name, author, author_id, language, publisher, isbn]
