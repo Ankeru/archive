@@ -38,8 +38,7 @@ paths:
                   results:
                     type: array
                     items:
-                      $ref: '#/components/schemas/results'
-                    
+                      $ref: '#/components/schemas/results'                    
 components:
   schemas:
     pagination:
