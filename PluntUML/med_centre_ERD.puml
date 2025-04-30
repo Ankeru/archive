@@ -19,7 +19,7 @@ id
 Контактные данные
 График работы
 }
-entity "Doc's office" as do {
+entity "Office" as of {
 id
 Номер кабинета
 }
@@ -36,18 +36,32 @@ entity "Service" as s {
 id
 name
 }
-entity "Appointment_Service" as as {
+entity "AppointmentService" as as {
 id_appointment
 id_service
 }
+entity "DoctorService" as ds {
+id_doctor
+id_service
+}
+entity "DoctorOffice" as do {
+id_doctor
+id_office
+}
+entity "DoctorPatient" as dp {
+id_doctor
+id_patient
+}
 
-
-d }o--|{ do
-d }o--|{ s
-p }o--o{ d
+d ||--|{ do
+of ||--o{ do
+d ||--|{ ds
+s ||--o{ ds
+d ||--o{ dp
+p ||--o{ dp
 p |o--o{ ap
 ap }o--|| d
-ap }o--|| do
+ap }o--|| of 
 ap ||--o{ as
 s ||--o{ as
 @enduml
