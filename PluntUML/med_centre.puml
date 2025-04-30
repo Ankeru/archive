@@ -1,0 +1,53 @@
+@startuml
+skinparam linetype ortho
+entity "Patient" as p {
+id
+ФИО
+Статус
+Дата рождения
+Контактные данные
+}
+entity "Doctor" as d {
+id
+ФИО
+Специализация
+Стаж работы
+Квалификационная категория
+Сертификаты и лицензии
+Должность
+Дата рождения
+Контактные данные
+График работы
+}
+entity "Doc's office" as do {
+id
+Номер кабинета
+}
+entity "Appointment" as ap {
+id
+Время записи
+Статус
+пациент
+кабинет
+врач
+услуга
+}
+entity "Service" as s {
+id
+name
+}
+entity "Appointment_Service" as as {
+id_appointment
+id_service
+}
+
+
+d }o--|{ do
+d }o--|{ s
+p }o--o{ d
+p |o--o{ ap
+ap }o--|| d
+ap }o--|| do
+ap ||--o{ as
+s ||--o{ as
+@enduml
