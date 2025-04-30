@@ -1,0 +1,81 @@
+@startuml
+skinparam linetype ortho
+
+entity "Patient" as p {
+  id: INT; not null; <<PK>>
+  FirstName: VARCHAR(50); not null
+  Patronymic: VARCHAR(50);
+  LastName: VARCHAR(50); not null
+  birth_date: DATE; not null
+  Contacts: VARCHAR(500);
+}
+
+entity "Doctor" as d {
+  id: INT; not null; <<PK>>
+  FirstName: VARCHAR(50); not null
+  Patronymic: VARCHAR(50);
+  LastName: VARCHAR(50); not null
+  Specialization: VARCHAR(50); not null
+  Experience: INT; not null
+  Qualification: VARCHAR(50); not null
+  Certificates: VARCHAR(500); not null
+  birth_date: DATE; not null
+  Contacts: VARCHAR(500)
+  Schedule: VARCHAR(50)
+}
+
+entity "Office" as of {
+  id: INT; not null; <<PK>>
+  number: INT; not null
+}
+
+entity "Appointment" as ap {
+  id: INT; not null; <<PK>>
+  time: TIMESTAMP; not null
+  Status: VARCHAR(50); not null
+  id_patient: INT; <<FK>>
+  id_office: INT; not null; <<FK>>
+  id_doctor: INT; not null; <<FK>>
+  id_service: INT; <<FK>>
+}
+
+entity "Service" as s {
+  id: INT; not null; <<PK>>
+  name: VARCHAR(50); not null
+  price: FLOAT; not null
+  duration: INT; not null
+}
+
+entity "AppointmentService" as as {
+  id_appointment: INT; not null; <<PK>>
+  id_service: INT; not null; <<PK>>
+}
+
+entity "DoctorService" as ds {
+  id_doctor: INT; not null; <<PK>>
+  id_service: INT; not null; <<PK>>
+}
+
+entity "DoctorOffice" as do {
+  id_doctor: INT; not null; <<PK>>
+  id_office: INT; not null; <<PK>>
+}
+
+entity "DoctorPatient" as dp {
+  id_doctor: INT; not null; <<PK>>
+  id_patient: INT; not null; <<PK>>
+}
+
+d ||--|{ do
+of ||--o{ do
+d ||--|{ ds
+s ||--o{ ds
+d ||--o{ dp
+p ||--o{ dp
+p |o--o{ ap
+ap }o--|| d
+ap }o--|| of 
+ap ||--o{ as
+s ||--o{ as
+
+@enduml
