@@ -26,7 +26,7 @@ entity "Doctor" as d {
 
 entity "Office" as of {
   id: INT; not null; <<PK>>
-  number: INT; not null
+  number: INT; not null; <<UQ>>
 }
 
 entity "Appointment" as ap {
@@ -41,7 +41,8 @@ entity "Appointment" as ap {
 
 entity "Service" as s {
   id: INT; not null; <<PK>>
-  name: VARCHAR(50); not null
+  name: VARCHAR(50); not null; <<UQ>>
+  description: VARCHAR(500); not null
   price: FLOAT; not null
   duration: INT; not null
 }
