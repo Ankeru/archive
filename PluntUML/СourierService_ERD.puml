@@ -2,47 +2,54 @@
 skinparam linetype ortho
 
 entity order {
-order_id: INT; not null; <<PK>>
-product_ids: integer[]; not null
+id: INT; not null; <<PK>>
 creation_time: TIMESTAMP; not null
 --
 }
 entity user {
-user_id: INT; not null; <<PK>>
+id: INT; not null; <<PK>>
 sex: VARCHAR(50); not null
 birth_date: DATE; not null
 --
 }
 entity user_action {
-user_id: INT; not null; <<PK>>
+id: INT; not null; <<PK>>
+user_id: INT; not null; <<FK>>
 order_id: INT; not null; <<FK>>
 action: VARCHAR(50); not null
 time: TIMESTAMP; not null
 --
 }
 entity product {
-product_id: INT; not null; <<PK>>
+id: INT; not null; <<PK>>
 price: FLOAT(4); not null
 name: VARCHAR(50); not null
 --
 }
 entity courier {
-courier_id: INT; not null; <<PK>>
+id: INT; not null; <<PK>>
 sex: VARCHAR(50); not null
 birth_date: DATE; not null
 --
 }
 entity courier_action {
-courier_id: INT; not null; <<PK>>
+id: INT; not null; <<PK>>
+courier_id: INT; not null; <<FK>>
 order_id: INT; not null; <<FK>>
 action: VARCHAR(50); not null
 time:TIMESTAMP; not null
 --
 }
 
+entity OrderProduct {
+order_id: INT; not null; <<PK>>
+product_id: INT; not null; <<PK>>
+}
+
 user ||--o{ user_action
 user_action ||--|| order
 courier ||--o{ courier_action
 courier_action ||--|| order
-order ||--o{ product
+order ||--o{OrderProduct 
+product ||--o{ OrderProduct
 @enduml
