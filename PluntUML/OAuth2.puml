@@ -1,0 +1,20 @@
+@startuml
+actor "Браузер" as user
+participant "Клиент" as client 
+participant "Сервер" as server
+
+user -> client++: 1. Запрос на подключение к серверу
+user ++
+client -> server++: 2. Клиент перенаправляет запрос на сервер, сообщая Сallback URL
+client <-- server: 3. Возвращает клиенту форму для входа
+user <-- client: 4. Отображает форму для входа
+user -> client: 5. Ввод credentials для входа на сервер
+client -> server: 6. Аутентификация
+client <-- server: 7. Сервер перенаправляет пользователя по URL-адресу Сallback URL, указанному в шаге 2 с кодом авторизации для клиента
+client -> server: 8. Запрос с кодом авторизации (шаг 7) и секретным ключем клиента
+client <-- server: 9. Токен доступа (access token)
+client -> server: 10. Запрос информации с включением токена доступа
+client <-- server--: 11. Запрашиваемая информация
+user <-- client--: 12. Отображение информации
+user--
+@enduml
