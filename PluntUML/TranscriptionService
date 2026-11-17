@@ -1,0 +1,46 @@
+
+@startuml
+actor User as U
+participant WebApp as WA
+participant AudioService as AS
+participant TranscriptionService as TS
+participant NotificationService as NS
+
+U -> WA: uploadAudio(file)
+activate WA
+WA -> AS: uploadAudio(file)
+activate AS
+
+note right of AS: Проверка формата
+
+alt [формат неподдерживаемый]
+    AS --> WA: UNSUPPORTED_FORMAT
+    deactivate AS
+    WA --> U: Сообщение об ошибке
+    deactivate WA
+else [формат поддерживается]
+    AS ->> TS: startTranscription(file)
+    AS --> WA: jobId
+    deactivate AS
+    WA --> U: Файл принят в обработку
+    deactivate WA
+
+    TS ->> AS: transcriptionResult(status)
+    activate AS
+
+    loop [status = FAILED и повторов < 3]
+        AS ->> TS: retryTranscription(jobId)
+        deactivate AS
+        TS ->> AS: transcriptionResult(status)
+        activate AS
+    end
+
+    alt [status = COMPLETED]
+        AS ->> NS: notifySuccess(jobId)
+    else [status = FAILED]
+        AS ->> NS: notifyFailure(jobId)
+    end
+
+    deactivate AS
+end
+@enduml
